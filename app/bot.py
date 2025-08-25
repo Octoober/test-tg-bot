@@ -18,6 +18,7 @@ load_dotenv()
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
 ADMIN_ID = os.environ.get("ADMIN_ID") or None
+WEBHOOK_URL = os.environ.get("WEBHOOK_URL") or None
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
 
@@ -89,7 +90,17 @@ def init_bot() -> None:
     application.add_handler(CommandHandler("add", add_user))
     application.add_handler(CommandHandler("users", show_users))
 
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
+    if WEBHOOK_URL:
+        print("Run webhook")
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=8080,
+            webhook_url=WEBHOOK_URL,
+            allowed_updates=Update.ALL_TYPES,
+        )
+    else:
+        print("Run polling")
+        application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 def main():

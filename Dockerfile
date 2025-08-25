@@ -16,5 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --chown=appuser:appuser ./app ./app
 
 ENV PYTHONUNBUFFERED=1
+ENV PORT=8080
+EXPOSE 8080
+
 # Запускаем из подпапки app
 CMD ["python","app/bot.py"]
