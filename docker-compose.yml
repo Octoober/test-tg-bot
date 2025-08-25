@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  whitelist_bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./data:/data
+      - .:/workspace
+    env_file:
+      - .env
+    # working_dir: /workspace/app

@@ -1,0 +1,39 @@
+# .dockerignore - что НЕ попадает в образ при сборке
+
+# Секретные файлы
+.env
+.env.*
+!.env.example
+
+# Git и devcontainer
+.git
+.gitignore
+.devcontainer/
+
+# Документация и README
+*.md
+docs/
+
+# Кеши и временные файлы
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+*.log
+
+# Docker файлы (не нужны внутри образа)
+docker-compose*.yml
+Dockerfile*
+
+# IDE файлы
+.vscode/
+.idea/
+*.swp
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Данные (монтируются через volume)
+data/

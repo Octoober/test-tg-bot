@@ -1,0 +1,25 @@
+{
+  "name": "Whitelist Bot",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "whitelist_bot",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "appuser",
+  "shutdownAction": "stopCompose",
+  "overrideCommand": true,
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-python.black-formatter"],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/sh",
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        // Включаем автоформатирование
+        "editor.formatOnSave": true,
+        
+        // Устанавливаем Black как форматтер для Python
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        }
+      }
+    }
+  }
+}

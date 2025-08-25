@@ -1,0 +1,14 @@
+*.py[cod]
+*.log
+*.env
+settings.json
+settings.json.*
+*.db
+
+__pycache__/
+.vscode/
+.venv/
+temp/
+tem/
+logs/
+data/
