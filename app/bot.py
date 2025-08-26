@@ -20,6 +20,7 @@ load_dotenv()
 BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
 ADMIN_ID = os.environ.get("ADMIN_ID") or None
 WEBHOOK_URL = os.environ.get("WEBHOOK_URL") or None
+PORT = os.environ.get("PORT") or 8443
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
 
@@ -97,7 +98,7 @@ def init_bot() -> None:
         print("Run webhook")
         application.run_webhook(
             listen="0.0.0.0",
-            port=8443,
+            port=PORT,
             webhook_url=WEBHOOK_URL,
             allowed_updates=Update.ALL_TYPES,
         )
