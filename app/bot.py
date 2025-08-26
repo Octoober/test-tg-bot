@@ -5,7 +5,6 @@ import aiosqlite
 from pathlib import Path
 from dotenv import load_dotenv
 
-from flask import Flask, request
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
