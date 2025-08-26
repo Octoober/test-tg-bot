@@ -6,7 +6,7 @@
   "remoteUser": "appuser",
   "shutdownAction": "stopCompose",
   "overrideCommand": true,
-  "forwardPorts": [8443],
+  "forwardPorts": [8443, 8080],
   "customizations": {
     "vscode": {
       "extensions": ["ms-python.python", "ms-python.black-formatter"],

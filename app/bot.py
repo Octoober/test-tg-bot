@@ -1,3 +1,4 @@
+from email import message
 import os
 import time
 import uuid
@@ -19,7 +20,7 @@ load_dotenv()
 BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
 ADMIN_ID = os.environ.get("ADMIN_ID") or None
 WEBHOOK_URL = os.environ.get("WEBHOOK_URL") or None
-PORT = os.environ.get("PORT") or 8443
+PORT = int(os.environ.get("PORT", 8080))
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
 
@@ -70,7 +71,8 @@ async def show_users(update: Update, context: ContextTypes) -> None:
         await update.message.reply_text("Нет юзеров в бд")
         return
 
-    message = "Users:".join(f"@{user[1]} ({user[0]})" for user in users)
+    user_list = [f"@{user[1]} (ID: {user[0]})" for user in users]
+    message = "Юзеры в бд:\n" + "\n".join(user_list)
 
     await update.message.reply_text(message)
 
@@ -78,6 +80,9 @@ async def show_users(update: Update, context: ContextTypes) -> None:
 async def post_init(application: Application) -> None:
     print("POST_INIT")
     msg = "init"
+    if not ADMIN_ID:
+        print("ADMIN_ID is None")
+        return
     await application.bot.sendMessage(ADMIN_ID, msg)
     await init_database()
 
@@ -97,6 +102,7 @@ def init_bot() -> None:
             listen="0.0.0.0",
             port=PORT,
             webhook_url=WEBHOOK_URL,
+            url_path="/telegram",
             allowed_updates=Update.ALL_TYPES,
         )
     else:
