@@ -5,6 +5,7 @@ import aiosqlite
 from pathlib import Path
 from dotenv import load_dotenv
 
+from flask import Flask, request
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
@@ -21,6 +22,8 @@ ADMIN_ID = os.environ.get("ADMIN_ID") or None
 WEBHOOK_URL = os.environ.get("WEBHOOK_URL") or None
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
+
+app = Flask(__name__)
 
 
 async def init_database() -> None:
@@ -94,7 +97,7 @@ def init_bot() -> None:
         print("Run webhook")
         application.run_webhook(
             listen="0.0.0.0",
-            port=8080,
+            port=8443,
             webhook_url=WEBHOOK_URL,
             allowed_updates=Update.ALL_TYPES,
         )
