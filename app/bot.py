@@ -23,8 +23,6 @@ PORT = os.environ.get("PORT") or 8443
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
 
-app = Flask(__name__)
-
 
 async def init_database() -> None:
     async with aiosqlite.connect(DB_PATH) as conn:
