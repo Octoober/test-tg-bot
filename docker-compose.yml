@@ -12,4 +12,5 @@ services:
       - .:/workspace
     env_file:
       - .env
-    # working_dir: /workspace/app
+    ports:
+      - "8080:8080"

@@ -17,15 +17,24 @@ from telegram.ext import (
 
 load_dotenv()
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
-ADMIN_ID = os.environ.get("ADMIN_ID") or None
-WEBHOOK_URL = os.environ.get("WEBHOOK_URL") or None
-PORT = int(os.environ.get("PORT", 8080))
+BOT_TOKEN = os.getenv("BOT_TOKEN") or None
+ADMIN_ID = os.getenv("ADMIN_ID") or None
+WEBHOOK_URL = os.getenv("WEBHOOK_URL") or None
+PORT = int(os.getenv("PORT", 8080))
+
 ROOT_PATH = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT_PATH / "data" / "bot.db"
 
+if os.getenv("K_SERVICE"):
+    print("K_SERVICE is true")
+    DB_PATH = Path("/tmp/bot.db")
+else:
+    DB_PATH = ROOT_PATH / "data" / "bot.db"
+
 
 async def init_database() -> None:
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+
     async with aiosqlite.connect(DB_PATH) as conn:
         await conn.execute(
             """
@@ -60,6 +69,7 @@ async def add_user(update: Update, context: ContextTypes) -> None:
 
 
 async def show_users(update: Update, context: ContextTypes) -> None:
+    print("show users")
     user = update.effective_user
     user_id = user.id
     username = user.username
@@ -114,6 +124,8 @@ def main():
     print(f"hi v2 ({time.time()}) - {uuid.uuid4()}")
     print(f"BOT: {BOT_TOKEN}")
     print(f"DB PATH: {DB_PATH}")
+    print(f"WEBHOOK_URL: {WEBHOOK_URL}")
+    print(f"PORT: {PORT}")
 
     init_bot()
 
